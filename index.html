@@ -1,12 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro FX Premium Pro</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Esperando la llamada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0f1720; --card:#0b1220; --accent:#28a745; --text:#fff }
+    html,body{ height:100%; margin:0; }
+    body{
+      display:flex; align-items:center; justify-content:center; padding:24px;
+      background: radial-gradient(circle at 20% 10%, rgba(255,255,255,0.03), transparent), var(--bg);
+      font-family: 'Mountains of Christmas', cursive;
+      color:var(--text);
+    }
+    .card{
+      width: min(920px,96vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:22px; padding:48px 32px; text-align:center; box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    h1{
+      font-size: clamp(36px, 8vw, 84px);
+      margin:0 0 8px; letter-spacing:0.02em;
+      color:var(--accent);
+      text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+    p.subtitle{
+      margin:0 0 28px; font-size:18px; opacity:0.9;
+    }
+
+    .phone-row{ display:flex; align-items:center; justify-content:center; gap:28px; }
+
+    /* Icono de teléfono */
+    .phone-wrap{ width:120px; height:120px; display:grid; place-items:center; background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); border-radius:22px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position:relative }
+
+    .phone{
+      width:64px; height:64px; transform-origin:center; animation: vibrate 0.08s infinite alternate;
+    }
+
+    /* Vibración: pequeño movimiento lateral y giro */
+    @keyframes vibrate{
+      0%{ transform: translateX(-2px) rotate(-1deg) }
+      100%{ transform: translateX(2px) rotate(1deg) }
+    }
+
+    /* Onda de vibración (pulsos alrededor del teléfono) */
+    .pulse {
+      position:absolute; inset:auto; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:160px; height:160px; border-radius:50%; pointer-events:none;
+    }
+    .pulse::before, .pulse::after{
+      content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border-radius:50%;
+      width:100%; height:100%; opacity:0.0; border:2px solid rgba(40,167,69,0.22);
+      animation: pulseRing 1.6s ease-out infinite;
+    }
+    .pulse::after{ animation-delay:0.8s }
+
+    @keyframes pulseRing{
+      0%{ transform: translate(-50%,-50%) scale(0.6); opacity:0.6 }
+      100%{ transform: translate(-50%,-50%) scale(1.6); opacity:0 }
+    }
+
+    /* Número y texto */
+    .phone-info{ text-align:left }
+    .number{
+      font-size: clamp(20px,4vw,36px); margin:0; font-weight:700; color:var(--text);
+      letter-spacing:0.02em; display:flex; align-items:center; gap:12px;
+    }
+    .number .label{ font-size:14px; opacity:0.85; font-weight:600 }
+
+    .vibrate-dot{
+      width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(40,167,69,0.6);
+      animation: pulseDot 1s infinite; margin-left:6px;
+    }
+    @keyframes pulseDot{
+      0%{ transform: scale(1); opacity:1 }
+      50%{ transform: scale(1.4); opacity:0.6 }
+      100%{ transform: scale(1); opacity:1 }
+    }
+
+    /* Botón de colgar/colgar (solo visual) */
+    .hint{ margin-top:20px; font-size:14px; opacity:0.9 }
+
+    /* Responsive tweaks */
+    @media (max-width:520px){ .phone-row{ flex-direction:column; gap:16px } .phone-wrap{ width:110px; height:110px } }
+  </style>
 </head>
 <body>
-    <h1>Bienvenido a Pro FX Premium Pro 🚀</h1>
-    <p>Tu sitio web está en línea con GitHub Pages y GoDaddy.</p>
+  <div class="card" role="region" aria-label="Esperando la llamada">
+    <h1>Esperando la llamada</h1>
+    <p class="subtitle">Mantente atento — el teléfono está vibrando</p>
+
+    <div class="phone-row">
+      <div class="phone-wrap" aria-hidden="true">
+        <div class="pulse"></div>
+        <!-- Icono de teléfono estilo moderno (SVG) -->
+        <svg class="phone" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21 16.5v3a1.5 1.5 0 0 1-1.64 1.493c-3.223-.184-6.321-1.76-8.989-4.429C6.583 14.365 5.008 11.267 4.824 8.044A1.5 1.5 0 0 1 6.317 6.4h3A1.5 1.5 0 0 1 10.8 7.891c.03.903.173 1.803.439 2.684.233.78-.07 1.647-.748 2.324l-.7.7a11.327 11.327 0 0 0 4.6 4.6l.7-.7c.677-.678 1.545-.98 2.324-.748.88.266 1.78.408 2.684.439A1.5 1.5 0 0 1 21 16.5z" fill="#ffffff" opacity="0.98"/>
+        </svg>
+      </div>
+
+      <div class="phone-info">
+        <p class="number"><span class="label"></span> <span class="vibrate-dot" aria-hidden="true"></span></p>
+        <p class="hint"> <code>phoneNumber</code> en el archivo HTML.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // pequeño script opcional: simula vibración adicional al pasar el mouse o tocar
+    const phone = document.querySelector('.phone');
+    const wrap = document.querySelector('.phone-wrap');
+
+    function tempShake(){
+      wrap.animate([
+        { transform: 'translateX(-4px) rotate(-2deg)' },
+        { transform: 'translateX(4px) rotate(2deg)' }
+      ], { duration: 260, iterations: 6 });
+    }
+
+    wrap.addEventListener('mouseenter', tempShake);
+    wrap.addEventListener('touchstart', tempShake);
+
+    // Accesible: anuncia que el teléfono está vibrando para lectores de pantalla
+    if('ariaLive' in document.createElement('div')){
+      const live = document.createElement('div');
+      live.setAttribute('aria-live', 'polite');
+      live.style.position = 'absolute'; live.style.left='-9999px';
+      live.textContent = 'Teléfono vibrando';
+      document.body.appendChild(live);
+    }
+  </script>
 </body>
 </html>
